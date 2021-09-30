@@ -44,3 +44,24 @@ function renderShoppingCart() {
         shoppingCartList.appendChild(row);
     })
 }
+
+function deleteProduct(e) {
+    if (e.target.classList.contains('deleteProduct')) {
+        const productId = (e.target.getAttribute('data-id'));
+
+        shoppingCart = shoppingCart.filter( product => product.id !== productId)
+
+        clearLocalStorage();
+        setLocalstorage();
+        renderShoppingCart()
+    }
+    
+}
+
+function setLocalstorage() {
+    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
+}
+
+function clearLocalStorage() {
+    localStorage.clear();
+}

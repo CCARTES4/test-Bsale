@@ -93,6 +93,13 @@ function readProductData(product) {
         shoppingCart = [...shoppingCart, products];
         
     }
+
+    setLocalstorage();
     
+}
+
+
+function setLocalstorage() {
+    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
 }
 
