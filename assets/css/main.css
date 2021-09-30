@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    min-height: 80px;
+    box-shadow: 0 0 4px 0.142rem rgb(0 0 0 / 25%);
+}
+
+.nav-link{
+    font-weight: bold;
+    color: black !important;
+}
+
+.navbar-collapse{
+    justify-content: flex-end;
+}
+
+.title{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    margin-left: 1rem;
+    margin-top: 4rem;
+}
+
+.mt-50{
+    margin-top: 50px;
+}
+
+.mb-50{
+    margin-bottom: 50px;
+}
+
+
+.principal{
+    margin-top: 140px;
+}
