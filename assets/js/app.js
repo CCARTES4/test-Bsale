@@ -14,10 +14,14 @@ function loadEventListeners() {
 function loadProducts() {
 
     const url = 'https://ccartes.000webhostapp.com/product';
-
-    fetch(url)
+    try {
+        fetch(url)
         .then(result => result.json())
         .then(data => renderProducts(data));
+    } catch (error) {
+        alert(`there is a problem loading products ${error}`)
+    }
+    
 }
 
 function renderProducts(products) {
@@ -49,5 +53,46 @@ function renderProducts(products) {
             </div>
         `;
     });
+}
+
+function addToCart(e) {
+    e.preventDefault();
+
+    if (e.target.classList.contains('bg-cart')) {
+        const selectedProduct = e.target.parentElement.parentElement;
+        readProductData(selectedProduct);
+    }
+}
+
+function readProductData(product) {
+
+    const products = {
+        id: product.querySelector('#cod').value,
+        name: product.querySelector('#name').textContent,
+        url_image: product.querySelector('#productImage').src,
+        price: product.querySelector('#price').textContent,
+        discount: product.querySelector('#discount').value,
+        category: product.querySelector('#category').value,
+        quantity: 1
+    }
+
+
+    const exist = shoppingCart.some(product => product.id === products.id);
+
+    if (exist) {
+        const updatedProduct = shoppingCart.map(product => {
+            if (product.id === products.id) {
+                product.quantity++;
+                return product;
+            } else {
+                return product;
+            }
+        })
+        shoppingCart = [...updatedProduct]
+    } else {
+        shoppingCart = [...shoppingCart, products];
+        
+    }
+    
 }
 
