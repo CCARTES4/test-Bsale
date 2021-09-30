@@ -7,6 +7,7 @@ loadEventListeners()
 
 
 function loadEventListeners() {
+    renderCartQuantity()
     loadProducts();
     productList.addEventListener('click', addToCart)
 }
@@ -34,7 +35,7 @@ function renderProducts(products) {
                 <div class="card">
                     <div class="card-body">
                         <div class="card-img-actions">
-                            <img id="productImage" src="${url_image}" class="card-img img-fluid" height="20px" alt="img_product">
+                            <img id="productImage" src="${url_image}" class="card-img img-fluid" alt="img_product">
                         </div>
                     </div>
                     <div class="card-body bg-light text-center">
@@ -93,9 +94,28 @@ function readProductData(product) {
         shoppingCart = [...shoppingCart, products];
         
     }
-
+    renderCartQuantity();
     setLocalstorage();
     
+}
+
+function renderCartQuantity(){
+    const exist = document.querySelector('#acc');
+
+    const list = document.createElement('li');
+    const acc = document.createElement('a');
+
+    if (exist) {
+        exist.innerText = shoppingCart.length;
+    } else {
+        acc.classList.add('btn', 'btn-danger', 'carQuantity');
+        list.classList.add('nav-item');
+        acc.setAttribute('id', 'acc');
+        acc.innerText = shoppingCart.length;
+        list.appendChild(acc);
+        nav.appendChild(list);
+    }
+    console.log(shoppingCart.length)
 }
 
 
