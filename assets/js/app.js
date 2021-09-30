@@ -34,7 +34,7 @@ function renderProducts(products) {
                 <div class="card">
                     <div class="card-body">
                         <div class="card-img-actions">
-                            <img id="productImage" src="${url_image}" class="card-img img-fluid" width="96" height="350" alt="img_product">
+                            <img id="productImage" src="${url_image}" class="card-img img-fluid" height="20px" alt="img_product">
                         </div>
                     </div>
                     <div class="card-body bg-light text-center">
