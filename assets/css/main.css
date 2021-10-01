@@ -32,6 +32,9 @@
     margin-bottom: 50px;
 }
 
+main{
+    min-height: 100vh;
+}
 
 .principal{
     margin-top: 140px;
@@ -63,8 +66,8 @@
 }
 
 .card-img {
-    width: auto;
-    height: auto;
+    max-width: 200px;
+    min-height: 200px;
 }
 
 

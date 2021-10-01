@@ -1,6 +1,7 @@
 const productList = document.querySelector('#product-grid');
 const nav = document.querySelector('#ul');
 let shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+let categorySelect = document.querySelector('#category');
 
 
 loadEventListeners()
@@ -10,19 +11,23 @@ function loadEventListeners() {
     renderCartQuantity()
     loadProducts();
     productList.addEventListener('click', addToCart)
+    categorySelect.addEventListener('change', loadProducts);
 }
 
 function loadProducts() {
+    let value = categorySelect.options[categorySelect.selectedIndex].value;
 
-    const url = 'https://ccartes.000webhostapp.com/product';
+    const url = `https://ccartes.000webhostapp.com/product.php?id=${value}`;
     try {
-        fetch(url)
+        fetch(url, {
+            method: 'GET'
+        })
         .then(result => result.json())
         .then(data => renderProducts(data));
+        cleanHTML();
     } catch (error) {
         alert(`there is a problem loading products ${error}`)
     }
-    
 }
 
 function renderProducts(products) {
@@ -31,7 +36,7 @@ function renderProducts(products) {
         const { id, name, url_image, price, discount, category } = product;
 
         productList.innerHTML += `
-            <div class="col-md-3 col-sm-4 col-lg-3 mt-4">
+            <div class="col-12 col-md-4 col-sm-4 col-lg-3 mt-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="card-img-actions">
@@ -77,7 +82,6 @@ function readProductData(product) {
         quantity: 1
     }
 
-
     const exist = shoppingCart.some(product => product.id === products.id);
 
     if (exist) {
@@ -115,11 +119,16 @@ function renderCartQuantity(){
         list.appendChild(acc);
         nav.appendChild(list);
     }
-    console.log(shoppingCart.length)
 }
 
+function cleanHTML() {
+    while (productList.firstChild) {
+        productList.removeChild(productList.firstChild);
+    }
+}
 
 function setLocalstorage() {
     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
 }
+
 
