@@ -3,11 +3,15 @@ const nav = document.querySelector('#ul');
 let shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
 let categorySelect = document.querySelector('#category');
 const resetSearch = document.querySelector('#resetSearch');
+const searchInput = document.querySelector('#productSearch');
 
 
 loadEventListeners()
 
-
+/**
+ * Esta función se encarga de cargar todos los metodos necesarios para el funcionamiento inicial de la aplicación, ya sea renderizado
+ * de todos los productos, cambio según opcion seleccionada en el SELECT 
+ */
 function loadEventListeners() {
     renderCartQuantity()
     loadProducts();
@@ -17,24 +21,37 @@ function loadEventListeners() {
         loadProducts(categoryId);
     });
     resetSearch.addEventListener('click', restoreSearch);
+    searchInput.addEventListener('change',searchProduct);
 }
 
+/**
+ * Está función se encarga de realizar la consulta a la API para retornar todos los productos disponibles. Como la API puede recibir un parámetro opcional, 
+ * se realiza una validación en la cuál si se envía el parametro opcional, la url variará y de lo contrario, esta quedará como estaba definida en un principio.
+ * @param {int} categoryId 
+ */
 function loadProducts(categoryId) {
 
-    let url = `https://ccartes.000webhostapp.com/product.php`;
+    try {
+        let url = `https://ccartes.000webhostapp.com/products.php`;
 
-    categoryId !== undefined ? url = `https://ccartes.000webhostapp.com/product.php?id=${categoryId}` : url;
+        categoryId !== undefined ? url = `https://ccartes.000webhostapp.com/products.php?categoria=${categoryId}` : url;
 
-    fetch(url, {
-        method: 'GET'
-    })
-    .then(result => result.json())
-    .then(data => renderProducts(data));
-    cleanHTML();
-    console.log(categoryId);
-
+        fetch(url, {
+            method: 'GET'
+        })
+        .then(result => result.json())
+        .then(data => renderProducts(data));
+        cleanHTML();
+    } catch (error) {
+        alert(`Oh no! Ha habido un problema al cargar los productos ${error}`)
+    }
+    
 }
 
+/**
+ * Esta función se encarga de todo el renderizado de los productos recibidos en el llamado a la API
+ * @param {array} products 
+ */
 function renderProducts(products) {
     products.forEach(product => {
 
@@ -66,6 +83,10 @@ function renderProducts(products) {
     });
 }
 
+/**
+ * 
+ * @param {event} e 
+ */
 function addToCart(e) {
     e.preventDefault();
 
@@ -105,7 +126,6 @@ function readProductData(product) {
     }
     renderCartQuantity();
     setLocalstorage();
-    
 }
 
 function renderCartQuantity(){
@@ -123,6 +143,22 @@ function renderCartQuantity(){
         acc.innerText = shoppingCart.length;
         list.appendChild(acc);
         nav.appendChild(list);
+    }
+}
+
+function searchProduct(e){
+    let search = e.target.value;
+    try {
+        let url = `https://ccartes.000webhostapp.com/products.php?nombre=${search}`;
+
+        fetch(url, {
+            method: 'GET'
+        })
+        .then(result => result.json())
+        .then(data => renderProducts(data));
+        cleanHTML();
+    } catch (error) {
+        alert(`Oh no! Ha habido un problema al cargar los productos ${error}`)
     }
 }
 
