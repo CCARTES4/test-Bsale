@@ -18,7 +18,7 @@ function restoreCart(){
 }
 
 function renderShoppingCart() {
-
+    const noImage = './assets/img/noImage.jpg'
     restoreCart()
 
     shoppingCart.forEach( product => {
@@ -26,7 +26,7 @@ function renderShoppingCart() {
         const row = document.createElement('tr');
         row.innerHTML = `
         <td> 
-            <img src="${url_image}" width="60" height="60" >
+            <img src="${url_image ? url_image : noImage}" width="60" height="60" >
         </td>
         <td> 
             ${name}

@@ -2,6 +2,7 @@ const productList = document.querySelector('#product-grid');
 const nav = document.querySelector('#ul');
 let shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
 let categorySelect = document.querySelector('#category');
+const resetSearch = document.querySelector('#resetSearch');
 
 
 loadEventListeners()
@@ -11,36 +12,40 @@ function loadEventListeners() {
     renderCartQuantity()
     loadProducts();
     productList.addEventListener('click', addToCart)
-    categorySelect.addEventListener('change', loadProducts);
+    categorySelect.addEventListener('change', (e) => {
+        let categoryId = categorySelect.options[categorySelect.selectedIndex].value;
+        loadProducts(categoryId);
+    });
+    resetSearch.addEventListener('click', restoreSearch);
 }
 
-function loadProducts() {
-    let value = categorySelect.options[categorySelect.selectedIndex].value;
+function loadProducts(categoryId) {
 
-    const url = `https://ccartes.000webhostapp.com/product.php?id=${value}`;
-    try {
-        fetch(url, {
-            method: 'GET'
-        })
-        .then(result => result.json())
-        .then(data => renderProducts(data));
-        cleanHTML();
-    } catch (error) {
-        alert(`there is a problem loading products ${error}`)
-    }
+    let url = `https://ccartes.000webhostapp.com/product.php`;
+
+    categoryId !== undefined ? url = `https://ccartes.000webhostapp.com/product.php?id=${categoryId}` : url;
+
+    fetch(url, {
+        method: 'GET'
+    })
+    .then(result => result.json())
+    .then(data => renderProducts(data));
+    cleanHTML();
+    console.log(categoryId);
+
 }
 
 function renderProducts(products) {
     products.forEach(product => {
 
         const { id, name, url_image, price, discount, category } = product;
-
+        const noImage = './assets/img/noImage.jpg'
         productList.innerHTML += `
             <div class="col-12 col-md-4 col-sm-4 col-lg-3 mt-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="card-img-actions">
-                            <img id="productImage" src="${url_image}" class="card-img img-fluid" alt="img_product">
+                            <img id="productImage" src="${url_image ? url_image : noImage}" class="card-img img-fluid" alt="img_product">
                         </div>
                     </div>
                     <div class="card-body bg-light text-center">
@@ -131,4 +136,8 @@ function setLocalstorage() {
     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
 }
 
+function restoreSearch() {
+    categorySelect.selectedIndex = 0;
+    loadProducts();
+}
 
