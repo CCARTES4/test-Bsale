@@ -17,6 +17,11 @@
     justify-content: flex-end;
 }
 
+body{
+    min-height: 100vh;
+    margin-top: 6rem;
+}
+
 .title{
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
