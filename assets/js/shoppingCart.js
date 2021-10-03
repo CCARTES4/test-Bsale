@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded',() => {
      * en el array que contiene los productos agregados a este.
      */
     function restoreCart(){
-
         while (shoppingCartList.firstChild) {
             shoppingCartList.removeChild(shoppingCartList.firstChild);
         }
@@ -80,7 +79,6 @@ document.addEventListener('DOMContentLoaded',() => {
             setLocalstorage();
             renderShoppingCart()
         }
-        
     }
 
     function setLocalstorage() {

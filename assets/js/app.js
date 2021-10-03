@@ -86,24 +86,11 @@ document.addEventListener('DOMContentLoaded',() =>{
     }
 
     /**
-     * 
-     * @param {event} e 
-     */
-    function addToCart(e) {
-        e.preventDefault();
-
-        if (e.target.classList.contains('bg-cart')) {
-            const selectedProduct = e.target.parentElement.parentElement;
-            readProductData(selectedProduct);
-        }
-    }
-
-    /**
      * Esta función se encarga de guardar el producto seleccionado por el cliente dentro de un array y posteriormente, realizar la validación de si el producto ya existe 
      * o no dentro del mismo, en caso de existir, actualiza la cantidad de este y de lo contrario, lo agrega al arreglo. 
      * @param {array} product 
      */
-    function readProductData(product) {
+     function readProductData(product) {
 
         const products = {
             id: product.querySelector('#cod').value,
@@ -136,24 +123,26 @@ document.addEventListener('DOMContentLoaded',() =>{
     }
 
     /**
+     * Seleccionamos el elemento padre que contiene todos los div tipo card y capturamos el evento para luego, enviarle lo seleccionado al método readProductData().
+     * @param {event} e 
+     */
+    function addToCart(e) {
+        e.preventDefault();
+
+        if (e.target.classList.contains('bg-cart')) {
+            const selectedProduct = e.target.parentElement.parentElement;
+            readProductData(selectedProduct);
+        }
+    }
+
+    
+
+    /**
      * Esta función se encarga de ir actualizando el contador de productos. Es un indicador visual para el usuario saber cuántos productos tiene agregados en su carrito. 
      */
     function renderCartQuantity(){
-        const exist = document.querySelector('#acc');
-
-        const list = document.createElement('li');
-        const acc = document.createElement('a');
-
-        if (exist) {
-            exist.innerText = shoppingCart.length;
-        } else {
-            acc.classList.add('btn', 'btn-danger', 'carQuantity');
-            list.classList.add('nav-item');
-            acc.setAttribute('id', 'acc');
-            acc.innerText = shoppingCart.length;
-            list.appendChild(acc);
-            nav.appendChild(list);
-        }
+        const counter = document.querySelector('#acc');
+        counter.innerText = shoppingCart.length;
     }
 
     /**
