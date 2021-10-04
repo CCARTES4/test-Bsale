@@ -1,3 +1,5 @@
+import {setLocalstorage, clearLocalStorage} from './localStorage.js';
+
 document.addEventListener('DOMContentLoaded',() => {
     
 
@@ -76,16 +78,9 @@ document.addEventListener('DOMContentLoaded',() => {
             shoppingCart = shoppingCart.filter( product => product.id !== productId)
 
             clearLocalStorage();
-            setLocalstorage();
+            setLocalstorage(shoppingCart);
             renderShoppingCart()
         }
     }
 
-    function setLocalstorage() {
-        localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
-    }
-
-    function clearLocalStorage() {
-        localStorage.clear();
-    }
 })

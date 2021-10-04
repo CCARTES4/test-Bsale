@@ -1,7 +1,8 @@
+import {setLocalstorage, clearLocalStorage} from './localStorage.js';
+
 document.addEventListener('DOMContentLoaded',() =>{
 
     const productList = document.querySelector('#product-grid');
-    const nav = document.querySelector('#ul');
     let shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
     let categorySelect = document.querySelector('#category');
     const resetSearch = document.querySelector('#resetSearch');
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded',() =>{
     }
 
     /**
-     * Esta función se encarga de todo el renderizado de los productos recibidos en el llamado a la API
+     * Esta función se encarga de todo el renderizado de los productos recibidos en el llamado a la API. 
      * @param {array} products 
      */
     function renderProducts(products) {
@@ -119,7 +120,7 @@ document.addEventListener('DOMContentLoaded',() =>{
             
         }
         renderCartQuantity();
-        setLocalstorage();
+        setLocalstorage(shoppingCart);
     }
 
     /**
@@ -175,12 +176,6 @@ document.addEventListener('DOMContentLoaded',() =>{
         }
     }
 
-    /**
-     * Esta función se encarga de almacenar los productos en el localStorage del navegador para conservarlos en caso de que se cierre la página. 
-     */
-    function setLocalstorage() {
-        localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
-    }
 
     /**
      * Cuando el usuario realiza una búsqueda ya sea por categoría o por nombre, pero posterior a ello desea volver a ver todos los productos, esta función se encarga de
