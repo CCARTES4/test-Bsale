@@ -23,7 +23,10 @@ document.addEventListener('DOMContentLoaded',() =>{
             let categoryId = categorySelect.options[categorySelect.selectedIndex].value;
             loadProducts(categoryId);
         });
-        resetSearch.addEventListener('click', restoreSearch);
+        resetSearch.addEventListener('click', () => {
+            restoreSearch();
+            loadProducts();  
+        } );
         searchInput.addEventListener('change',searchProduct);
     }
 
@@ -161,6 +164,7 @@ document.addEventListener('DOMContentLoaded',() =>{
             })
             .then(result => result.json())
             .then(data => renderProducts(data));
+            restoreSearch();
             cleanHTML();
         } catch (error) {
             alert(`Oh no! Ha habido un problema al cargar los productos ${error}`)
@@ -183,7 +187,6 @@ document.addEventListener('DOMContentLoaded',() =>{
      */
     function restoreSearch() {
         categorySelect.selectedIndex = 0;
-        loadProducts();
     }
 
 })
