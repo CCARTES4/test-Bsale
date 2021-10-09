@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded',() =>{
     let categorySelect = document.querySelector('#category');
     const resetSearch = document.querySelector('#resetSearch');
     const searchInput = document.querySelector('#productSearch');
+    const searchForm = document.querySelector('#SearchForm');
+
 
 
     loadEventListeners()
@@ -27,7 +29,12 @@ document.addEventListener('DOMContentLoaded',() =>{
             restoreSearch();
             loadProducts();  
         } );
-        searchInput.addEventListener('change',searchProduct);
+        // searchInput.addEventListener('change',searchProduct);
+        searchForm.addEventListener('submit', e => {
+            
+            e.preventDefault();
+            searchProduct(searchInput.value);
+        })
     }
 
     /**
@@ -154,10 +161,10 @@ document.addEventListener('DOMContentLoaded',() =>{
      * Realiza una consulta a la API y va retornado los productos según correspondan. 
      * @param {event} e 
      */
-    function searchProduct(e){
-        let search = e.target.value;
+    function searchProduct(productName){
+        console.log('entré');
         try {
-            let url = `https://ccartes.000webhostapp.com/products.php?nombre=${search}`;
+            let url = `https://ccartes.000webhostapp.com/products.php?nombre=${productName}`;
 
             fetch(url, {
                 method: 'GET'

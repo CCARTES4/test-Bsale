@@ -31,21 +31,25 @@
                     <li class="nav-item">
                         <a href="index.html" class="nav-link">PRODUCTOS</a>
                     </li>
-        
-                    <li class="nav-item">
-                        <a href="shoppingCart.html" class="nav-link">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-danger carQuantity" id="acc">0</a>
-                    </li>
                 </ul>
             </div>
 
-            <div class="col-12 col-md-4" >
-
-                <input id="productSearch" class="form-control" type="text" placeholder="Buscar producto" aria-label="Buscar producto">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4" >
+                <form id="SearchForm" >
+                    <div class="input-group">
+                        <input id="productSearch" type="text" class="form-control" placeholder="Nombre producto " aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="">
+                            <button id="btnSearch" class="btn btn-outline-secondary" type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <a href="shoppingCart.html" class="nav-link">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-danger carQuantity" id="acc">0</a>
+                    </div>
+                </form>
+                  
             </div>
 
         </nav>
