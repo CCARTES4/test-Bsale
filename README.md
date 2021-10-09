@@ -26,14 +26,14 @@ Si quieres ver una demo del proyecto, puedes acceder al deploy en el siguiente e
 
 ## Cómo clonar
 
-Dado que la aplicación no cuenta con ningún requisito en especifico, para clonarla solo basta con ejecutar el comando: 
+Para clonarla solo basta con ejecutar el comando: 
 ~~~ 
 git clone https://github.com/CCARTES4/test-Bsale.git
 ~~~
 
-## Instalación 
+## Instalación/ejecución
 
-La instalación no requiere de ningun paquete adicional, por lo tanto, con solo clonar y abrir el archivo "index" ya estará corriendo.
+Dado que la aplicación realiza multiples consultas a una API, debemos ejecutar el proyecto en un servidor local (ej XAMPP o live server para VS Code) si no, nuestras peticiones serán bloqueadas por CORS impidiendo el correcto funcionamiento.
 
 ## Autor
 

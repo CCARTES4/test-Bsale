@@ -1,7 +1,9 @@
+/**Importación de funciones para guardar/limpiar localStorage */
 import {setLocalstorage, clearLocalStorage} from './localStorage.js';
 
 document.addEventListener('DOMContentLoaded',() =>{
 
+    //Creación de variables que serán utilizadas de manera global por más de una función
     const productList = document.querySelector('#product-grid');
     let shoppingCart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
     let categorySelect = document.querySelector('#category');
@@ -10,7 +12,7 @@ document.addEventListener('DOMContentLoaded',() =>{
     const searchForm = document.querySelector('#SearchForm');
 
 
-
+    //Inicio de función que carga todos los listeners(eventos) de la aplicación;
     loadEventListeners()
 
     /**
@@ -29,6 +31,7 @@ document.addEventListener('DOMContentLoaded',() =>{
         resetSearch.addEventListener('click', () => {
             restoreSearch();
             loadProducts();  
+            searchInput.value = '';
         } );
         // searchInput.addEventListener('change',searchProduct);
         searchForm.addEventListener('submit', e => {
@@ -61,42 +64,7 @@ document.addEventListener('DOMContentLoaded',() =>{
             alert(`Oh no! Ha habido un problema al cargar los productos ${error}`)
         }
         
-    }
-
-    /**
-     * Esta función permite cargar el select de categorias dinamicamente, es decir, realiza una consulta a la API y según los resultados obtenidos
-     */
-    function getCategories() {
-        
-        try {
-            const url = `http://localhost/API%20PHP/API/products.php?categorias`;
-
-            fetch(url, {
-                method: 'GET'
-            } )
-            .then(result => result.json())
-            .then(data => insertCategories(data))
-            .catch();
-        } catch (error) {
-            alert(alert(`Uh, Houston, tuvimos un problema al cargar las categorías. Por favor, recarga la página. ${error}`)  );
-        }
-    }
-
-    /**
-     * Se encarga de crear, asignar valor, texto y renderizar los elementos option por cada resultado que retorne la API  
-     * @param {array} categories 
-     */
-    function insertCategories(categories) {
-        categories.forEach( category => {
-            const {id, name } = category;
-
-            let option = document.createElement('option');
-            option.value = id;
-            option.innerText = name;
-            categorySelect.appendChild(option);
-        })
-    }
-    
+    } 
 
     /**
      * Esta función se encarga de todo el renderizado de los productos recibidos en el llamado a la API. 
@@ -106,7 +74,7 @@ document.addEventListener('DOMContentLoaded',() =>{
         products.forEach(product => {
 
             const { id, name, url_image, price, discount, category } = product;
-            const noImage = './assets/img/noImage.jpg'
+            const noImage = './assets/img/noImage.jpg';
             productList.innerHTML += `
                 <div class="col-12 col-md-4 col-sm-4 col-lg-3 mt-4">
                     <div class="card">
@@ -171,6 +139,14 @@ document.addEventListener('DOMContentLoaded',() =>{
     }
 
     /**
+     * Esta función se encarga de ir actualizando el contador de productos. Es un indicador visual para el usuario saber cuántos productos tiene agregados en su carrito. 
+     */
+     function renderCartQuantity(){
+        const counter = document.querySelector('#acc');
+        counter.innerText = shoppingCart.length;
+    }
+
+    /**
      * Seleccionamos el elemento padre que contiene todos los div tipo card y capturamos el evento para luego, enviarle lo seleccionado al método readProductData().
      * @param {event} e 
      */
@@ -183,15 +159,6 @@ document.addEventListener('DOMContentLoaded',() =>{
         }
     }
 
-    
-
-    /**
-     * Esta función se encarga de ir actualizando el contador de productos. Es un indicador visual para el usuario saber cuántos productos tiene agregados en su carrito. 
-     */
-    function renderCartQuantity(){
-        const counter = document.querySelector('#acc');
-        counter.innerText = shoppingCart.length;
-    }
 
     /**
      * Esta función se encarga de retornar los productos que contengan en su nombre los caracteres indicados por el usuario en el input de buscar.
@@ -231,6 +198,40 @@ document.addEventListener('DOMContentLoaded',() =>{
      */
     function restoreSearch() {
         categorySelect.selectedIndex = 0;
+    }
+
+    /**
+     * Esta función permite cargar el select de categorias dinamicamente, es decir, realiza una consulta a la API y posteriormente, realiza un llamado a la 
+     * función insertCategories
+     */
+    function getCategories() {
+        
+        try {
+            const url = `https://ccartes.000webhostapp.com/categories.php?categorias`;
+
+            fetch(url, {
+                method: 'GET'
+            } )
+            .then(result => result.json())
+            .then(data => insertCategories(data))
+        } catch (error) {
+            alert(alert(`Uh, Houston, tuvimos un problema al cargar las categorías. Por favor, recarga la página. ${error}`)  );
+        }
+    }
+
+    /**
+     * Se encarga de crear, asignar valor, texto y renderizar los elementos option por cada resultado que retorne la API  
+     * @param {array} categories 
+     */
+    function insertCategories(categories) {
+        categories.forEach( category => {
+            const {id, name } = category;
+
+            let option = document.createElement('option');
+            option.value = id;
+            option.innerText = name;
+            categorySelect.appendChild(option);
+        })
     }
 
 })
