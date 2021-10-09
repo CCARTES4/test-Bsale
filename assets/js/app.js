@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded',() =>{
     }
 
     /**
-     * Esta función permite cargar el select de categorias dinamicamente, es decir, realiza una consulta a la API y según los resultados obtenidos, 
+     * Esta función permite cargar el select de categorias dinamicamente, es decir, realiza una consulta a la API y según los resultados obtenidos
      */
     function getCategories() {
         
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded',() =>{
     }
 
     /**
-     * 
+     * Se encarga de crear, asignar valor, texto y renderizar los elementos option por cada resultado que retorne la API  
      * @param {array} categories 
      */
     function insertCategories(categories) {
