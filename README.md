@@ -10,6 +10,7 @@ Este proyecto cuenta con 1 sola rama en la cual, se encuentra el front end de la
 ## Funcionalidad
 
 <li> Buscar según categoría de producto
+<li> Buscar según nombre de producto
 <li> Agregar a carrito (inc. quitar productos)
 
 ## Tecnologías

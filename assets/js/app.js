@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded',() =>{
      * de todos los productos, cambio según opcion seleccionada en el SELECT 
      */
     function loadEventListeners() {
+        getCategories();
         renderCartQuantity()
         loadProducts();
         productList.addEventListener('click', addToCart)
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded',() =>{
             e.preventDefault();
             searchProduct(searchInput.value);
         })
+        
     }
 
     /**
@@ -60,6 +62,41 @@ document.addEventListener('DOMContentLoaded',() =>{
         }
         
     }
+
+    /**
+     * Esta función permite cargar el select de categorias dinamicamente, es decir, realiza una consulta a la API y según los resultados obtenidos, 
+     */
+    function getCategories() {
+        
+        try {
+            const url = `http://localhost/API%20PHP/API/products.php?categorias`;
+
+            fetch(url, {
+                method: 'GET'
+            } )
+            .then(result => result.json())
+            .then(data => insertCategories(data))
+            .catch();
+        } catch (error) {
+            alert(alert(`Uh, Houston, tuvimos un problema al cargar las categorías. Por favor, recarga la página. ${error}`)  );
+        }
+    }
+
+    /**
+     * 
+     * @param {array} categories 
+     */
+    function insertCategories(categories) {
+        categories.forEach( category => {
+            const {id, name } = category;
+
+            let option = document.createElement('option');
+            option.value = id;
+            option.innerText = name;
+            categorySelect.appendChild(option);
+        })
+    }
+    
 
     /**
      * Esta función se encarga de todo el renderizado de los productos recibidos en el llamado a la API. 
