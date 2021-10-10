@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded',() =>{
     function loadProducts(categoryId) {
 
         try {
-            let url = `https://ccartes.000webhostapp.com/products.php`;
+            let url = `https://ccartess.000webhostapp.com//products.php`;
 
-            categoryId !== undefined ? url = `https://ccartes.000webhostapp.com/products.php?categoria=${categoryId}` : url;
+            categoryId !== undefined ? url = `https://ccartess.000webhostapp.com/products.php?categoria=${categoryId}` : url;
 
             fetch(url, {
                 method: 'GET'
@@ -166,9 +166,8 @@ document.addEventListener('DOMContentLoaded',() =>{
      * @param {event} e 
      */
     function searchProduct(productName){
-        console.log('entré');
         try {
-            let url = `https://ccartes.000webhostapp.com/products.php?nombre=${productName}`;
+            let url = `https://ccartess.000webhostapp.com/products.php?nombre=${productName}`;
 
             fetch(url, {
                 method: 'GET'
@@ -207,11 +206,11 @@ document.addEventListener('DOMContentLoaded',() =>{
     function getCategories() {
         
         try {
-            const url = `https://ccartes.000webhostapp.com/categories.php?categorias`;
+            const url = `https://ccartess.000webhostapp.com/categories.php?categorias`;
 
             fetch(url, {
                 method: 'GET'
-            } )
+            })
             .then(result => result.json())
             .then(data => insertCategories(data))
         } catch (error) {
