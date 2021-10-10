@@ -40,29 +40,33 @@ document.addEventListener('DOMContentLoaded',() => {
     function renderShoppingCart() {
         const noImage = './assets/img/noImage.jpg'
         restoreCart()
-
-        shoppingCart.forEach( product => {
-            const { id, name, url_image, price, discount, category, quantity } = product;
-            const row = document.createElement('tr');
-            row.innerHTML = `
-            <td> 
-                <img src="${url_image ? url_image : noImage}" width="60" height="60" >
-            </td>
-            <td> 
-                ${name}
-            </td>
-            <td> 
-                ${price}
-            </td>
-            <td> 
-                ${quantity}
-            </td>
-            <td> 
-                <a href="#" class="btn btn-danger deleteProduct" data-id=${id}> Quitar producto </a>
-            </td>
-            `;
-            shoppingCartList.appendChild(row);
-        })
+        if (shoppingCart != null ) {
+            shoppingCart.forEach( product => {
+                const { id, name, url_image, price, discount, category, quantity } = product;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td> 
+                    <img src="${url_image ? url_image : noImage}" width="60" height="60" >
+                </td>
+                <td> 
+                    ${name}
+                </td>
+                <td> 
+                    ${price}
+                </td>
+                <td> 
+                    ${quantity}
+                </td>
+                <td> 
+                    <a href="#" class="btn btn-danger deleteProduct" data-id=${id}> Quitar producto </a>
+                </td>
+                `;
+                shoppingCartList.appendChild(row);
+            })
+        } else {
+            return;
+        }
+        
     }
 
     /**
